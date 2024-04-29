@@ -17,25 +17,24 @@
 
 package org.apache.calcite.adapter.couchdb;
 
-import com.google.common.collect.ImmutableList;
-
 import org.apache.calcite.plan.*;
 import org.apache.calcite.rel.RelNode;
 import org.apache.calcite.rel.core.TableScan;
-import org.apache.calcite.rel.hint.RelHint;
 import org.apache.calcite.rel.metadata.RelMetadataQuery;
 import org.apache.calcite.rel.type.RelDataType;
+
+import com.google.common.collect.ImmutableList;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
 
-public class CouchTableScan extends TableScan implements CouchRel{
+public class CouchTableScan extends TableScan implements CouchRel {
   final CouchTable couchTable;
   final RelDataType projectRowType;
 
   public CouchTableScan(RelOptCluster cluster, RelTraitSet traitSet,
-      RelOptTable table, CouchTable couchTable, RelDataType projectRowType) {
+                        RelOptTable table, CouchTable couchTable, RelDataType projectRowType) {
     super(cluster, traitSet, ImmutableList.of(), table);
     this.couchTable = couchTable;
     this.projectRowType = projectRowType;

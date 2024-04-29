@@ -17,26 +17,14 @@
 
 package org.apache.calcite.adapter.couchdb;
 
-import com.google.common.collect.ImmutableMap;
-
-import com.google.gson.internal.LinkedTreeMap;
-
 import org.apache.calcite.schema.Table;
 import org.apache.calcite.schema.impl.AbstractSchema;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-
 import org.apache.http.util.EntityUtils;
+
+import com.google.common.collect.ImmutableMap;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -46,10 +34,7 @@ import org.lightcouch.CouchDbClient;
 import org.lightcouch.CouchDbProperties;
 
 import java.io.IOException;
-import java.net.URI;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Map;
 
 
 public class CouchSchema extends AbstractSchema {

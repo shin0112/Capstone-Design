@@ -19,15 +19,6 @@ package org.apache.calcite.adapter.couchdb;
 
 import org.apache.calcite.linq4j.Enumerator;
 
-
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.HttpGet;
-
-import org.apache.http.util.EntityUtils;
-
-import org.lightcouch.CouchDbClient;
-
-import java.io.IOException;
 import java.util.List;
 
 public class CouchEnumerator implements Enumerator {

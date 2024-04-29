@@ -17,19 +17,12 @@
 
 package org.apache.calcite.adapter.couchdb;
 
-import com.google.common.collect.ImmutableSet;
-
 import org.apache.calcite.schema.Schema;
 import org.apache.calcite.schema.SchemaFactory;
 import org.apache.calcite.schema.SchemaPlus;
 
-import org.lightcouch.CouchDbClient;
-import org.lightcouch.CouchDbProperties;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class CouchSchemaFactory implements SchemaFactory {
   public CouchSchemaFactory() {
