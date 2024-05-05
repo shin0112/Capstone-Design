@@ -9,7 +9,7 @@
       "operand": {
         "host": "localhost",
         "username": "admin",
-        "password": "my0504",
+        "password": "password",
         "protocol": "http",
         "port": "5984",
         "database": "wiki"

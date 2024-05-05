@@ -17,10 +17,6 @@
 
 package org.apache.calcite.adapter.couchdb;
 
-import com.google.common.collect.ImmutableList;
-
-import com.google.common.collect.ImmutableSet;
-
 import org.apache.calcite.adapter.java.JavaTypeFactory;
 import org.apache.calcite.plan.RelOptCluster;
 import org.apache.calcite.plan.RelTraitSet;
@@ -31,12 +27,15 @@ import org.apache.calcite.rex.RexNode;
 import org.apache.calcite.util.Pair;
 import org.apache.calcite.util.Util;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CouchProject extends Project implements CouchRel {
-  protected CouchProject(RelOptCluster cluster, RelTraitSet traits,
-      RelNode input, List<? extends RexNode> projects, RelDataType rowType) {
+  protected CouchProject(RelOptCluster cluster, RelTraitSet traits, RelNode input, List<?
+      extends RexNode> projects, RelDataType rowType) {
     super(cluster, traits, ImmutableList.of(), input, projects, rowType, ImmutableSet.of());
     assert getConvention() == CouchRel.CONVENTION;
     assert getConvention() == input.getConvention();
@@ -44,7 +43,8 @@ public class CouchProject extends Project implements CouchRel {
 
   // Project Rule 반환
   @Override
-  public Project copy(RelTraitSet traitSet, RelNode input, List<RexNode> projects, RelDataType rowType) {
+  public Project copy(RelTraitSet traitSet, RelNode input, List<RexNode> projects,
+      RelDataType rowType) {
     return new CouchProject(getCluster(), traitSet, input, projects, rowType);
   }
 
@@ -56,6 +56,26 @@ public class CouchProject extends Project implements CouchRel {
   public void implement(Implementor implementor) {
     implementor.visitChild(0, getInput());
 
+    final CouchRules.RexToCouchTranslator translator =
+        new CouchRules.RexToCouchTranslator((JavaTypeFactory) getCluster().getTypeFactory(),
+            CouchRules.couchFieldNames(getInput().getRowType()));
 
+    // project 하고 싶은 거 가져오기
+    final List<String> items = new ArrayList<>();
+    for (Pair<RexNode, String> pair : getNamedProjects()) {
+      items.add("\"" + pair.right + "\"");
+    }
+
+    for (String item : items) {
+      System.out.println("fields 확인");
+      System.out.println(item + ", ");
+    }
+
+    final String findString = Util.toString(items, "[", ", ", "]");
+    System.out.println("findString: " + findString);
+    final String aggregateString = "{\"fields\": " + findString + "}";
+    System.out.println("aggregateString: " + aggregateString);
+
+    implementor.add(aggregateString);
   }
 }
